@@ -1,0 +1,31 @@
+# CLAUDE.md — Bootstrap
+
+> **Fichier global** — `~/.claude/CLAUDE.md` — charge par Claude Code peu importe le cwd.
+> Ne jamais creer de CLAUDE.md projet qui override ce fichier sans raison explicite.
+
+## Configuration machine (seul endroit a modifier sur une nouvelle machine)
+
+brain_root: <BRAIN_ROOT>
+brain_name: <BRAIN_NAME>
+
+---
+
+## Bootstrap (obligatoire, dans l'ordre)
+
+0. `<BRAIN_ROOT>/PATHS.md`               — chemins machine
+1. `<BRAIN_ROOT>/profil/collaboration.md` — regles de travail
+2. `<BRAIN_ROOT>/agents/coach-boot.md`    — presence permanente (boot-summary L0)
+3. `<BRAIN_ROOT>/agents/secrets-guardian.md` — gardien secrets, permanent
+4. `<BRAIN_ROOT>/agents/helloWorld.md`    — briefing, focus, todos, CHECKPOINT, feature flags
+
+helloWorld prend le relais : etat projets, todos prioritaires, detection de session, feature_set, CHECKPOINT.
+Ne pas demander a l'utilisateur de se redecrire — tout est dans le brain.
+
+---
+
+## Regles critiques (non negociables)
+
+- Pas d'action destructive sans confirmation explicite
+- Ne jamais exposer secrets, tokens, cles privees
+- Fait non verifie → `Information manquante`
+- Incertitude → `Niveau de confiance: faible/moyen/eleve`

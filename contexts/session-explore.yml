@@ -1,0 +1,66 @@
+# session-explore.yml v2 — Sessions V2 (ADR-047)
+# Posture : je reflechis / navigue
+# Absorbe : navigate, brainstorm, coach, capital, audit
+# Trigger : "brain boot explore[/<scope>]"
+# Cible : ~18% contexte max au boot
+
+session_type: explore
+description: "Session d'exploration — navigation, brainstorm, coaching, audit"
+tier_required: free
+
+# L0 — Invariant (~4%) — TOUJOURS charge
+L0:
+  - PATHS.md
+  - brain-compose.local.yml
+  - KERNEL.md
+
+# L1 — Session type (~10%) — tier free
+L1:
+  - now.md                          # bridge session precedente
+  - focus.md                        # direction actuelle
+  - agents/coach-boot.md            # garde comportemental (free)
+  - BRAIN-INDEX.md                  # claims actifs + signaux
+  - todo/README.md                  # index intentions
+
+# L1_featured — coach complet pour sessions reflexion
+L1_featured:
+  - agents/coach.md                 # coach complet — mentorat, bilan, structure
+
+# L2 — Scope conditionnel (~4%)
+L2:
+  template: "projets/{project}.md"
+  extras: []
+  fallback: null
+
+# L3 — On demand (0% au boot)
+# Agents charges a la demande selon scope :
+#   /brainstorm → wiki/patterns.md (brainstorm-before-build enforcement)
+#   /coach      → metabolism/README.md, profil/collaboration.md (coach dimension primaire)
+#   /capital    → profil/objectifs.md, profil/capital.md, progression/README.md
+#   /audit      → agents/security.md, agents/code-review.md (write-lock implicite)
+#   (vide)      → lobby navigate : agents/guide.md, agents/pathfinder.md, agents/catalogist.md
+L3:
+  hint: "Charger selon scope : brainstorm→patterns, coach→metabolism, capital→profil, audit→security+review"
+
+# --- Comportements absorbes ---
+# navigate   : lobby pattern (scope vide = navigation legere)
+#              agents guide/catalogist/pathfinder charges en L3 sur scope vide
+# brainstorm : pas de code, pas de commit — reflexion pure
+#              wiki/patterns.md charge en L3 (brainstorm-before-build)
+# coach      : coach.md devient dimension primaire (override contexte projet)
+#              metabolisme + collaboration charges en L3
+# capital    : profil/objectifs.md + profil/capital.md charges en L3
+#              capital-scribe auto-trigger sur changement capital.md
+# audit      : write-lock implicite (lecture seule sauf rapport final)
+#              agents security + code-review charges en L3
+
+# --- Gates ---
+gates:
+  audit_write_lock: "scope /audit → lecture seule, toute ecriture refusee sauf rapport"
+
+# --- Metriques cibles ---
+context_target:
+  L0: "~4%"
+  L1: "~10%"
+  L2: "~4%"
+  total_boot: "~18%"
